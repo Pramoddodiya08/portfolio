@@ -5,7 +5,7 @@ import styles from "./Header.module.css";
 const Header: React.FC = () => {
   const [isFixed, setIsFixed] = useState(false);
 
-  const handleSmoothScroll = (event: any, targetId: any) => {
+  const handleSmoothScroll = (event: any, targetId: string) => {
     event.preventDefault();
     const targetElement = document.getElementById(targetId);
     if (targetElement) {

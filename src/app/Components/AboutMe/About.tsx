@@ -41,7 +41,7 @@ function About() {
           About Me
         </h2>
         <p className="text-lg leading-relaxed text-gray-300">
-          👋 Hi there! I'm a passionate{" "}
+          👋 Hi there! I&apos;m a passionate{" "}
           <span className="text-[#ffc107]">Front-End Developer</span> with
           expertise in crafting interactive, responsive, and visually appealing
           user interfaces. I specialize in turning creative ideas into

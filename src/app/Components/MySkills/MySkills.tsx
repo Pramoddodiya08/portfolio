@@ -1,22 +1,13 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { BiLogoHtml5 } from "react-icons/bi";
-import {
-  FaCode,
-  FaLaptop,
-  FaCogs,
-  FaRegComments,
-  FaShoppingCart,
-  FaServer,
-  FaReact,
-} from "react-icons/fa";
+import { FaReact } from "react-icons/fa";
 import { RiAngularjsLine, RiNextjsLine } from "react-icons/ri";
 import { SiAltiumdesigner } from "react-icons/si";
 import { TbBrandJavascript } from "react-icons/tb";
 
 function MySkills() {
   const vantaRef = useRef<HTMLDivElement>(null);
-  const [vantaEffect, setVantaEffect] = useState<any>(null);
 
   useEffect(() => {
     let vantaInstance: any;
@@ -41,8 +32,6 @@ function MySkills() {
             size: 2.0, // Dot size
             spacing: 20.0, // Dot spacing
           });
-
-          setVantaEffect(vantaInstance);
         } catch (error) {
           console.error("Failed to load Vanta.js", error);
         }
@@ -53,7 +42,6 @@ function MySkills() {
 
     return () => {
       if (vantaInstance) vantaInstance.destroy();
-      setVantaEffect(null);
     };
   }, []);
 

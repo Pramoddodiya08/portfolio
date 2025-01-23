@@ -1,9 +1,8 @@
 "use client";
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect } from "react";
 
 const HeroBanner: React.FC = () => {
   const vantaRef = useRef<HTMLDivElement>(null);
-  const [vantaEffect, setVantaEffect] = useState<any>(null);
   //here last change
   useEffect(() => {
     let vantaInstance: any;
@@ -32,8 +31,6 @@ const HeroBanner: React.FC = () => {
             alignment: 80, // Alignment of the flock
             cohesion: 100, // Cohesion of the flock
           });
-
-          setVantaEffect(vantaInstance);
         } catch (error) {
           console.error("Failed to load Vanta.js", error);
         }
@@ -44,7 +41,6 @@ const HeroBanner: React.FC = () => {
 
     return () => {
       if (vantaInstance) vantaInstance.destroy();
-      setVantaEffect(null);
     };
   }, []);
 
@@ -61,7 +57,7 @@ const HeroBanner: React.FC = () => {
         <p className="font-semibold tracking-wider uppercase text-xl mb-8">
           👋, My name is Pramod
         </p>
-        <h1 className="text-[60px] font-bold mb-5">I'm a Developer</h1>
+        <h1 className="text-[60px] font-bold mb-5">I&apos;m a Developer</h1>
         <p className="text-lg leading-relaxed max-w-2xl">
           Designing the future with passion and expertise. Creating digital
           experiences that push the boundaries of innovation.
