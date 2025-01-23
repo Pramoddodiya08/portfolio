@@ -1,0 +1,20 @@
+.tab {
+  padding: 8px 15px;
+  background-color: transparent;
+  border: 2px solid #333;
+  border-radius: 5px;
+  color: white; /* Changed from black to white to match your design */
+  text-align: center;
+  text-decoration: none;
+  font-size: 18px;
+  transition: all 0.3s ease;
+}
+
+.tab:hover {
+  box-shadow: 0 0 20px rgba(255, 193, 7, 0.5);
+  border-color: #ffc107;
+}
+
+.tab:active {
+  box-shadow: 0 0 30px rgba(255, 193, 7, 0.7);
+}

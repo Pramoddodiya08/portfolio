@@ -1,0 +1,41 @@
+/* Container that holds the cards */
+.container {
+  flex-direction: column;
+  align-items: center;
+  perspective: 1000px; /* Perspective for 3D effect */
+  display: flex;
+  padding: 9rem;
+}
+
+/* Card styles */
+.card,
+.card2 {
+  border-radius: 1rem;
+  transition: transform 0.4s ease-out, box-shadow 0.4s ease-out;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  background: #fafafa;
+  padding: 1rem 3rem;
+  transform: rotate(0deg);
+}
+
+/* Initial transformations for the cards */
+.card {
+  transform: rotateY(-40deg); /* Tilt the card on Y-axis */
+  height: 40rem;
+  width: 30rem;
+}
+
+.card2 {
+  transform: rotateX(80deg) rotateZ(40deg); /* Tilt card on X and Z axes */
+  height: 30rem;
+  width: 40rem;
+}
+
+/* Hover effect to bring the cards back to their original position */
+.card:hover,
+.card:active,
+.card2:hover,
+.card2:active {
+  transform: rotate(0); /* Reset the rotation on hover */
+  box-shadow: 0 0 30px rgba(255, 193, 7, 0.5); /* Add a glowing effect */
+}
