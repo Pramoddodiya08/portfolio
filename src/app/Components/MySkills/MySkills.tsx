@@ -1,49 +1,49 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BiLogoHtml5 } from "react-icons/bi";
 import { FaReact } from "react-icons/fa";
 import { RiAngularjsLine, RiNextjsLine } from "react-icons/ri";
 import { SiAltiumdesigner } from "react-icons/si";
 import { TbBrandJavascript } from "react-icons/tb";
+import VANTA from "vanta/dist/vanta.dots.min";
+import * as THREE from "three";
+
+interface VantaInstance {
+  destroy: () => void;
+}
 
 function MySkills() {
+  const [vantaEffect, setVantaEffect] = useState<VantaInstance | null>(null);
   const vantaRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    let vantaInstance: any;
-
-    const loadVanta = async () => {
-      if (typeof window !== "undefined") {
-        try {
-          const VANTA = (await import("vanta/dist/vanta.dots.min")).default;
-
-          vantaInstance = VANTA({
-            el: vantaRef.current,
-            mouseControls: true,
-            touchControls: true,
-            gyroControls: false,
-            minHeight: 200.0,
-            minWidth: 200.0,
-            scale: 1.0,
-            scaleMobile: 1.0,
-            backgroundColor: 0x0d1117, // Background color
-            color: 0xffc107, // Dot color
-            showLines: false, // Disable connecting lines
-            size: 2.0, // Dot size
-            spacing: 20.0, // Dot spacing
-          });
-        } catch (error) {
-          console.error("Failed to load Vanta.js", error);
-        }
-      }
-    };
-
-    loadVanta();
+    if (!vantaEffect && vantaRef.current) {
+      const effect = VANTA({
+        el: vantaRef.current,
+        THREE: THREE,
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200.0,
+        minWidth: 200.0,
+        scale: 1.0,
+        scaleMobile: 1.0,
+        backgroundColor: 0x0d1117,
+        color: 0xffc107,
+        showLines: false,
+        size: 2.0,
+        spacing: 20.0,
+      }) as VantaInstance;
+      setVantaEffect(effect);
+    }
 
     return () => {
-      if (vantaInstance) vantaInstance.destroy();
+      if (vantaEffect) {
+        vantaEffect.destroy();
+        setVantaEffect(null);
+      }
     };
-  }, []);
+  }, [vantaEffect]);
 
   return (
     <div

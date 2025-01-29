@@ -1,48 +1,43 @@
 "use client";
-import React, { useRef, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import BIRDS from "vanta/dist/vanta.birds.min";
+import * as THREE from "three";
+
+interface VantaInstance {
+  destroy: () => void;
+}
 
 const HeroBanner: React.FC = () => {
+  const [vantaEffect, setVantaEffect] = useState<VantaInstance | null>(null);
   const vantaRef = useRef<HTMLDivElement>(null);
-  //here last change
+
   useEffect(() => {
-    let vantaInstance: any;
-
-    const loadVanta = async () => {
-      if (typeof window !== "undefined") {
-        try {
-          const VANTA = (await import("vanta/dist/vanta.birds.min")).default;
-
-          vantaInstance = VANTA({
-            el: vantaRef.current,
-            mouseControls: true,
-            touchControls: true,
-            gyroControls: false,
-            minHeight: 200.0,
-            minWidth: 200.0,
-            scale: 1.0,
-            scaleMobile: 1.0,
-            backgroundColor: 0x0d1117, // Dark background color
-            color1: 0xfc813e, // Bird primary color
-            color2: 0x4caf50, // Bird secondary color
-            birdSize: 0.7, // Size of the birds
-            wingSpan: 25, // Wingspan of the birds
-            speedLimit: 3.0, // Speed of the birds
-            separation: 80.0, // Separation between birds
-            alignment: 80, // Alignment of the flock
-            cohesion: 100, // Cohesion of the flock
-          });
-        } catch (error) {
-          console.error("Failed to load Vanta.js", error);
-        }
+    if (!vantaEffect) {
+      const effect = BIRDS({
+        el: vantaRef.current,
+        THREE: THREE,
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 600.0,
+        minWidth: 600.0,
+        colorMode: "lerp",
+        birdSize: 0.6,
+        scale: 1.0,
+        scaleMobile: 1.0,
+        separation: 81.0,
+        color1: "#ffae08",
+        color2: "#ff5a00",
+        backgroundColor: 0x0d1117,
+      });
+      setVantaEffect(effect);
+    }
+    return () => {
+      if (vantaEffect) {
+        vantaEffect.destroy();
       }
     };
-
-    loadVanta();
-
-    return () => {
-      if (vantaInstance) vantaInstance.destroy();
-    };
-  }, []);
+  }, [vantaEffect]);
 
   return (
     <div className="relative min-h-[90vh] w-full">
@@ -50,9 +45,7 @@ const HeroBanner: React.FC = () => {
         ref={vantaRef}
         className="absolute top-0 left-0 w-full h-[100%] z-[-1]"
       ></div>
-
       <div className="absolute top-0 left-0 w-full h-[100%] z-0"></div>
-
       <div className="absolute top-1/2 left-[10%] transform -translate-y-1/2 text-white z-10">
         <p className="font-semibold tracking-wider uppercase text-xl mb-8">
           👋, My name is Pramod
@@ -66,5 +59,64 @@ const HeroBanner: React.FC = () => {
     </div>
   );
 };
+
+// "use client";
+// import React, { useRef, useEffect, useState } from "react";
+// import BIRDS from "vanta/dist/vanta.birds.min";
+// import * as THREE from "three";
+
+// // Define a type for the VANTA effect
+// type VantaEffect = {
+//   destroy: () => void;
+// } | null;
+
+// const HeroBanner: React.FC = () => {
+//   const vantaRef = useRef<HTMLDivElement>(null);
+//   const [vantaEffect, setVantaEffect] = useState<VantaEffect>(null);
+
+//   useEffect(() => {
+//     if (!vantaEffect) {
+//       const effect = BIRDS({
+//         el: vantaRef.current,
+//         THREE: THREE, // Make sure THREE is passed correctly
+//         mouseControls: true,
+//         touchControls: true,
+//         gyroControls: false,
+//         minHeight: 200.0,
+//         minWidth: 200.0,
+//         scale: 1.0,
+//         scaleMobile: 1.0,
+//         color: 0x3b82f6,
+//         backgroundColor: 0xf9fafb,
+//         separation: 100,
+//         alignment: 50,
+//         cohesion: 50,
+//         quantity: 4,
+//       });
+//       setVantaEffect(effect);
+//     }
+
+//     return () => {
+//       if (vantaEffect) {
+//         vantaEffect.destroy();
+//       }
+//     };
+//   }, [vantaEffect]);
+
+// return (
+//   <div className="relative min-h-[90vh] w-full">
+//     <div
+//       ref={vantaRef}
+//       className="absolute top-0 left-0 w-full h-[100%] z-[-1]"
+//     ></div>
+//     <div className="absolute top-0 left-0 w-full h-[100%] z-0"></div>
+//     <div className="absolute top-1/2 left-[10%] transform -translate-y-1/2 text-white z-10">
+//       <p className="font-semibold tracking-wider uppercase text-xl mb-8">
+//         work
+//       </p>
+//     </div>
+//   </div>
+// );
+// };
 
 export default HeroBanner;
