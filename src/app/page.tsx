@@ -1,3 +1,4 @@
+"use client";
 import HeroBanner from "./Components/HeroBanner/HeroBanner";
 import Header from "./Components/Header/Header";
 import Services from "./Components/Services/Services";
