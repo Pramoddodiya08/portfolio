@@ -33,8 +33,11 @@ const Header: React.FC = () => {
   };
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
     const handleScroll = () => setIsFixed(window.scrollY > 0);
     window.addEventListener("scroll", handleScroll);
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
