@@ -1,10 +1,15 @@
-import React from "react";
+"use client";
+import React, { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 function MyApproch() {
   return (
     <div
       className="min-h-[80vh] py-[50px] bg-[#0d1117] text-white flex items-center"
-      id="aboutMe"
+      id="Approch"
     >
       <div className=" max-w-[80%] md:max-w-[70%] lg:max-w-[60%] mx-auto rounded-lg shadow-lg p-8">
         <div className="my-6 bg-[#1c1f26] p-6 rounded-lg">

@@ -1,8 +1,17 @@
 "use client";
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import React, {
+  useState,
+  ChangeEvent,
+  FormEvent,
+  useRef,
+  useEffect,
+} from "react";
 import { FaPhone, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-// Define the type for form values
+gsap.registerPlugin(ScrollTrigger);
+
 interface ContactFormValues {
   Name: string;
   Phone: string;
@@ -98,7 +107,6 @@ const Contact = () => {
           </form>
         </div>
 
-        {/* Contact Details section remains the same */}
         <div className="flex flex-col justify-center">
           <h2 className="text-3xl font-bold mb-8 text-white">
             Contact Details

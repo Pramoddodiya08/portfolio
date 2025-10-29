@@ -1,71 +1,96 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { Menu } from "lucide-react";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import styles from "./Header.module.css";
+
+const menuItems = [
+  { label: "Home", target: "" },
+  { label: "About", target: "aboutMe" },
+  { label: "Services", target: "service-section" },
+  { label: "Contact", target: "contact-section" },
+];
 
 const Header: React.FC = () => {
   const [isFixed, setIsFixed] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const handleSmoothScroll = (event: any, targetId: string) => {
+  const handleSmoothScroll = (event: React.MouseEvent, targetId: string) => {
     event.preventDefault();
     const targetElement = document.getElementById(targetId);
     if (targetElement) {
       targetElement.scrollIntoView({ behavior: "smooth" });
+      setIsOpen(false);
     }
   };
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      if (scrollPosition > 0) {
-        setIsFixed(true);
-      } else {
-        setIsFixed(false);
-      }
-    };
-
+    const handleScroll = () => setIsFixed(window.scrollY > 0);
     window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
-    <header className={`${styles.header} ${isFixed ? styles.fixedHeader : ""}`}>
+    <header
+      className={`${styles.header} ${
+        isFixed ? styles.fixedHeader : ""
+      } flex items-center justify-between px-6 py-4`}
+    >
       <div className="text-[30px] font-bold text-[#ffc107] cursor-pointer">
-        Genius
+        GENIUS
       </div>
 
-      <nav className="flex gap-[20px]">
-        <a
-          href="#"
-          className={styles.tab}
-          onClick={(e) => handleSmoothScroll(e, "")}
-        >
-          Home
-        </a>
-        <a
-          href="#aboutMe"
-          className={styles.tab}
-          onClick={(e) => handleSmoothScroll(e, "aboutMe")}
-        >
-          About
-        </a>
-        <a
-          href="#service-section"
-          className={styles.tab}
-          onClick={(e) => handleSmoothScroll(e, "service-section")}
-        >
-          Services
-        </a>
-        <a
-          href="#contact-section"
-          className={styles.tab}
-          onClick={(e) => handleSmoothScroll(e, "contact-section")}
-        >
-          Contact
-        </a>
+      <nav className="hidden md:flex gap-[20px]">
+        {menuItems.map(({ label, target }) => (
+          <Link
+            key={target}
+            href={`#${target}`}
+            className={styles.tab}
+            onClick={(e) => handleSmoothScroll(e, target)}
+          >
+            {label}
+          </Link>
+        ))}
       </nav>
+
+      <div className="md:hidden">
+        <Sheet open={isOpen} onOpenChange={setIsOpen}>
+          <SheetTrigger asChild>
+            <Button variant="ghost" size="icon" className="text-white">
+              <Menu className="h-6 w-6" />
+            </Button>
+          </SheetTrigger>
+
+          <SheetContent side="right" className="bg-white">
+            <SheetHeader>
+              <SheetTitle className="text-xl font-bold text-[#ffc107]">
+                GENIUS
+              </SheetTitle>
+            </SheetHeader>
+
+            <div className="mt-6 flex flex-col space-y-4">
+              {menuItems.map(({ label, target }) => (
+                <Link
+                  key={target}
+                  href={`#${target}`}
+                  className="text-lg font-medium hover:text-[#ffc107] transition"
+                  onClick={(e) => handleSmoothScroll(e, target)}
+                >
+                  {label}
+                </Link>
+              ))}
+            </div>
+          </SheetContent>
+        </Sheet>
+      </div>
     </header>
   );
 };
