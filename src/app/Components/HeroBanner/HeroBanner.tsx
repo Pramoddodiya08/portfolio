@@ -13,10 +13,11 @@ const HeroBanner: React.FC = () => {
   const vantaRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
     const screenWidth = window.innerWidth;
     const screenHeight = window.innerHeight;
     const isMobile = screenWidth < 768;
-
     if (!vantaEffect) {
       const effect = BIRDS({
         el: vantaRef.current,
